@@ -54,7 +54,7 @@ const Card = (props: any) => {
         </div>
         <div className="flex gap-1 text-xs text-mine-shaft-400 items-center">
           <IconClockHour3 className="h-5 w-5" stroke={1.5} />{props.applied||props.interviewing?"Applied ":props.offered?"Interviewed ":"Posted "}
-          {timeago(props.postedDaysAgo)}
+          {timeago(props.posttime)}
         </div>
       </div>
       {

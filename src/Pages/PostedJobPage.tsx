@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PostedJob from "../Components/PostedJob/PostedJob";
 import PostedJobDesc from "../Components/PostedJob/PostedJobDesc";
 import { useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { getJobPostedBy } from "../Services/JobService";
 
 
 const PostedJobPage=()=>{
+   const navigate=useNavigate();
    const {id} = useParams();
    const user=useSelector((state:any)=>state.user);
    const [jobList,setJobList] =useState<any[]>([]);
@@ -17,7 +18,8 @@ const PostedJobPage=()=>{
        getJobPostedBy(user.id)
       .then((res)=>{
          setJobList(res);
-         setJob(res.find((j:any)=>j.id===id));
+         if(res && res.length > 0 && Number(id)==0)navigate(`/posted-jobs/${res[0].id}`); 
+         setJob(res.find((j:any)=>j.id===Number(id)));
       })
       .catch(err=>console.log(err));
    },[id]);
@@ -25,8 +27,10 @@ const PostedJobPage=()=>{
     
   
     <div className="flex gap-5">
-       <PostedJob job={job} jobList={jobList}/>
-       <PostedJobDesc {...job}/>
+    
+          <PostedJob job={job} jobList={jobList} />
+          <PostedJobDesc {...job} />
+        
     </div>
 </div>
 }

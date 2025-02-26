@@ -53,7 +53,7 @@ const JobCard = (props: any) => {
           &#8377;{props.packageOffered} LPA
         </div>
         <div className="flex gap-1 text-xs text-mine-shaft-400 items-center">
-          <IconClockHour3 className="h-5 w-5" stroke={1.5} /> Posted {timeago (props.posttime)}
+          <IconClockHour3 className="h-5 w-5" stroke={1.5} /> Posted {timeago(props.posttime)}
         </div>
       </div>
       <Link to={`/jobs/${props.id}`}>

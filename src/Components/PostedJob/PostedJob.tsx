@@ -1,7 +1,6 @@
 import { Tabs } from "@mantine/core";
 
 import PostedJobCard from "./PostedJobCard";
-import { activeJobs } from "../../Data/PostedJob";
 import { useEffect, useState } from "react";
 
 const PostedJob=(props:any)=>{
@@ -9,7 +8,7 @@ const PostedJob=(props:any)=>{
   useEffect(()=>{
     setActiveTab(props.job?.jobStatus || 'ACTIVE')
   },[props.job])
-    return <div className="w-1/6 mt-5">
+    return <div className="w-1/5 mt-5">
         <div className="text-2xl font-semibold mb-5">Jobs</div>
         <div>
         <Tabs autoContrast variant="pills" value={activeTab} onChange={setActiveTab}>

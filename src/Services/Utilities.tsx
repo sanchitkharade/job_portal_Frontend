@@ -40,4 +40,20 @@ const getBase64=(file:any) =>{
         reader.onerror = (error) => reject(error);
     });
 }
-export {formatdate, timeago,getBase64};
+const formatInterviewTime=(dateStr:any)=>{
+    const date=new Date(dateStr);
+    return `${date.toLocaleTimeString('en-US', {
+       year:'numeric',month:'long',day:'numeric', hour: 'numeric', minute: 'numeric',hour12:true})}`;
+}
+const openBase64pdf=(base64String:string)=>{
+    const byteCharacters=atob(base64String);
+    const byteNumbers=new Array(byteCharacters.length);
+    for(let i=0;i<byteCharacters.length;i++){
+        byteNumbers[i]=byteCharacters.charCodeAt(i);
+    }
+    const byteArray=new Uint8Array(byteNumbers);
+    const blob=new Blob([byteArray], {type:'application/pdf'});
+    const url=URL.createObjectURL(blob);
+    window.open(url, '_blank');
+}
+export {formatdate, timeago,getBase64, formatInterviewTime,openBase64pdf};

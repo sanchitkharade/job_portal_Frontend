@@ -57,7 +57,7 @@ const JobDesc = (props:any) => {
             </Button>
           </Link>}
           {
-            applied && <Button color="green.8" size="sm" variant="light">
+           !props.edit && applied && <Button color="green.8" size="sm" variant="light">
             Applied
           </Button>
           }
