@@ -9,8 +9,8 @@ import { errorNotification, successNotification } from "../../Services/Notificat
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const PostJob=()=>{
-    const profile = useSelector((state:any)=>state.profile);
+const PostJob=(props:any)=>{
+    const user = useSelector((state:any)=>state.user);
     const navigate=useNavigate();
     const select=fields;
     const form=useForm({
@@ -43,7 +43,7 @@ const PostJob=()=>{
     const handlePost=()=>{
         form.validate();
         if(!form.isValid())return;
-        postJob({...form.getValues(), postedBy:profile.id,jobStatus:"ACTIVE"}).then((res)=>{
+        postJob({...form.getValues(), postedBy:user.id,jobStatus:"ACTIVE"}).then((res)=>{
             successNotification("Success","Job Posted Successfully");
             navigate(`/posted-job/${res.id}`);
         }).catch((err)=>{
@@ -52,7 +52,7 @@ const PostJob=()=>{
         });
     }
     const handleDraft=()=>{
-        postJob({...form.getValues(), postedBy:profile.id,jobStatus:"DRAFT"}).then((res)=>{
+        postJob({...form.getValues(), postedBy:user.id,jobStatus:"DRAFT"}).then((res)=>{
             successNotification("Success","Job Saved to Drafts Successfully");
             navigate(`/posted-job/${res.id}`);
         }).catch((err)=>{
