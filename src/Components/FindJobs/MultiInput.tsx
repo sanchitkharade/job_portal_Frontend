@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Checkbox, Combobox, Group, Input, Pill, PillsInput, useCombobox } from '@mantine/core';
 import { IconSelector } from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
+import { updateFilter } from '../../Slices/FilterSlice';
 const MultiInput=(props:any)=> {
+  const dispatch=useDispatch();
     useEffect(()=>{
         setData(props.options);
     },[props.options]);
@@ -22,15 +25,20 @@ const MultiInput=(props:any)=> {
     if (val === '$create') {
       setData((current) => [...current, search]);
       setValue((current) => [...current, search]);
+      dispatch(updateFilter({ [props.title]: [...value, search] }));
     } else {
       setValue((current) =>
         current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
       );
+      dispatch(updateFilter({[props.title]:value.includes(val)?value.filter((v)=>v !==val):[...value,val]}));
     }
   };
 
   const handleValueRemove = (val: string) =>
+   {
     setValue((current) => current.filter((v) => v !== val));
+   dispatch(updateFilter({[props.title]:value.filter((v)=> v!==val)}));
+   } 
 
   const values = value.slice(0,1).map((item) => (
     <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
