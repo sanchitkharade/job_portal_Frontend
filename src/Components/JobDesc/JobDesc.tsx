@@ -9,6 +9,8 @@ import { timeago } from "../../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { useEffect, useState } from "react";
+import { postJob } from "../../Services/JobService";
+import { errorNotification, successNotification } from "../../Services/NotificationService";
 
 const JobDesc = (props:any) => {
   const profile=useSelector((state:any) => state.profile);
@@ -36,6 +38,13 @@ const JobDesc = (props:any) => {
         setApplied(false);
       }
     },[props])
+    const handleClose=()=>{
+      postJob({...props,jobStatus:"CLOSED"}).then((res)=>{
+        successNotification("Success","Job Closed Successfully")
+      }).catch((err)=>{
+        errorNotification("Error",err.response.data.errorMessage);
+      });
+    }
   return (
     <div className="w-2/3 mt-4">
       <div className="flex  justify-between">
@@ -51,9 +60,9 @@ const JobDesc = (props:any) => {
           </div>
         </div>
         <div className="flex flex-col gap-2 items-center">
-          {(props.edit || !applied) && <Link to={`/apply-job/${props.id}`}>
+          {(props.edit || !applied) && <Link to={props.edit?`/post-jobs/${props.id}`:`/apply-job/${props.id}`}>
             <Button color="brightSun.4" size="sm" variant="light">
-              {props.edit?"Edit":"Apply"}
+              {props.closed?"Reopen":props.edit?"Edit":"Apply"}
             </Button>
           </Link>}
           {
@@ -61,8 +70,8 @@ const JobDesc = (props:any) => {
             Applied
           </Button>
           }
-          {props.edit?<Button color="red.5" size="sm" variant="light">
-              Delete
+          {props.edit && !props.closed?<Button color="red.5" size="sm" variant="light" onClick={handleClose}>
+              Close
             </Button>:profile.savedJobs?.includes(props.id)?<IconBookmarkFilled onClick={handleSaveJob} className="text-bright-sun-400 cursor-pointer" />:<IconBookmark onClick={handleSaveJob} className="text-mine-shaft-300 hover:text-bright-sun-400 cursor-pointer" />}
         </div>
       </div>
