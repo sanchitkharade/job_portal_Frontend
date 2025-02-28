@@ -3,10 +3,16 @@ import MultiInput from "./MultiInput";
 import { useState } from "react";
 import { dropdownData } from "../../Data/JobsData";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { updateFilter } from "../../Slices/FilterSlice";
 
 const SearchBar = () => {
-    const [value, setvalue] = useState<[number, number]>([1, 100]);
-
+    const [value, setvalue]=useState<[number, number]>([0, 300]);
+    const dispatch= useDispatch();
+    const handleChange=(e:any)=>{
+        dispatch(updateFilter({salary:e}));
+        
+    }
     return (
         <div className="flex px-5 py-5">
             {dropdownData.map((item, index) => (
@@ -22,7 +28,7 @@ const SearchBar = () => {
                     <div>Salary</div>
                     <div>&#8377;{value[0]} LPA - &#8377;{value[1]} LPA</div>
                 </div>
-                <RangeSlider value={value} onChange={setvalue} />
+                <RangeSlider value={value} onChange={setvalue} size="xs" color="brightSun.4" onChangeEnd={handleChange} />
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, NumberInput } from "@mantine/core";
 import fields from "../../Data/Profile";
 import { IconBriefcase, IconCheck, IconMapPin, IconPencil, IconX } from "@tabler/icons-react";
 import { useState } from "react";
@@ -17,7 +17,7 @@ const Info = () => {
     const handleClick=()=>{
         if(!edit){
             setEdit(true);
-            form.setValues({jobTitle: profile.jobTitle,company: profile.company,location: profile.location})
+            form.setValues({"jobTitle": profile.jobTitle,"company": profile.company,"location": profile.location,"totalExp": profile.totalExp})
         }
         else{
             setEdit(false);
@@ -25,7 +25,12 @@ const Info = () => {
     }
     const form =useForm({
         mode: 'controlled',
-        initialValues: {jobTitle:'',company:'',location:''},
+        initialValues: {
+            jobTitle:'',
+            company:'',
+            location:'',
+            totalExp:0,
+        },
     });
     const handleSave=()=>{
         setEdit(false);
@@ -45,10 +50,15 @@ const Info = () => {
                 <SelectInput form={form} name="jobTitle" {...select[0]}/>
                 <SelectInput form={form} name="company" {...select[1]}/>
             </div>
+            <div className="flex gap-10 [&>*]:w-1/2">
                 <SelectInput form={form} name="location" {...select[2]}/>
+                <NumberInput label="Experience" withAsterisk hideControls clampBehavior="strict" min={0} max={50} {...form.getInputProps('totalExp')}/>
+            </div>
         </> :<><div className="flex text-xl gap-1 items-center"><IconBriefcase className="h-5 w-5" stroke={1.5}/>{profile.jobTitle} &bull; {profile.company}</div>
                 <div className="flex gap-1 text-lg text-mine-shaft-300 items-center">
           <IconMapPin className="h-5 w-5" stroke={1.5} />{profile.location}</div>
+                <div className="flex gap-1 text-lg text-mine-shaft-300 items-center">
+          <IconBriefcase className="h-5 w-5" stroke={1.5} />Experience: {profile.totalExp} Years</div>
             </> 
     }
 
