@@ -43,7 +43,7 @@ const getBase64=(file:any) =>{
 const formatInterviewTime=(dateStr:any)=>{
     const date=new Date(dateStr);
     return `${date.toLocaleTimeString('en-US', {
-       year:'numeric',month:'long',day:'numeric', hour: 'numeric', minute: 'numeric',hour12:true})}`;
+       year:'numeric',month:'long',day:'numeric', hour: 'numeric', minute: 'numeric'})}`;
 }
 const openBase64pdf=(base64String:string)=>{
     const byteCharacters=atob(base64String);
