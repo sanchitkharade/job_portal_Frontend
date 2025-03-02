@@ -2,7 +2,6 @@ import { Button, LoadingOverlay, PasswordInput, rem, TextInput } from "@mantine/
 import { IconAt, IconLock, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../Services/UserService";
 import { loginValidation } from "../../Services/FormValidation";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
@@ -10,6 +9,9 @@ import ResetPassword from "./ResetPassword";
 import { useDispatch } from "react-redux";
 import { successNotification } from "../../Services/NotificationService";
 import { setUser } from "../../Slices/UserSlice";
+import { setJwt } from "../../Slices/Jwtslice";
+import { loginUser } from "../../Services/AuthService";
+import { jwtDecode } from "jwt-decode";
 
 const form={
   email: "",
@@ -39,9 +41,11 @@ const Login=()=>{
           setLoading(true);
           loginUser(data).then((res)=>{
             successNotification("Login successful","Redirect to Homepage...");
+            dispatch(setJwt(res.jwt));
+            const decoded=jwtDecode(res.jwt);
+            dispatch(setUser({...decoded,email:decoded.sub}));
             setTimeout(() => {
               setLoading(false);
-              dispatch(setUser(res));
               navigate("/")
             }, 4000);
         }).catch((err)=>{

@@ -17,6 +17,8 @@ import ProfilePage from "./ProfilePage";
 import HomePage from "./HomePage";
 import Footer from "../Components/Footer/Footer";
 import { useSelector } from "react-redux";
+import ProtectedRoute from "../Services/ProtectedRoute";
+import PublicRoute from "../Services/PublicRoute";
 const AppRoutes = () => {
     const user=useSelector((state:any)=>state.user)
    return <BrowserRouter>
@@ -28,13 +30,15 @@ const AppRoutes = () => {
       <Route path='/find-talent' element={<FindTalent/>}/>
       <Route path='/jobs/:id' element={<JobDescPage/>}/>
       <Route path='/apply-job/:id' element={<ApplyJobPage/>} />
-      <Route path='/post-jobs/:id' element={<PostJobs/>}/>
-      <Route path='/posted-jobs/:id' element={<PostedJobPage/>}/>
-      <Route path='/job-history' element={<JobHistoryPage/>}/>
+      <Route path='/post-jobs/:id' element=
+      {<ProtectedRoute allowedRoles={['EMPLOYER']}><PostJobs/></ProtectedRoute>}/>
+      <Route path='/posted-jobs/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostedJobPage/></ProtectedRoute>}/>
+      <Route path='/job-history' element=
+      {<ProtectedRoute allowedRoles={['APPLICANT']}><JobHistoryPage/></ProtectedRoute>}/>
       <Route path='/talent-profile/:id' element={<TalentProfile/>}/>
       <Route path='/company/:name' element={<CompanyPage/>}/>
-      <Route path='/signup' element={user?<Navigate to="/"/>:<SignupPage/>}/>
-      <Route path='/login' element={user?<Navigate to="/"/>:<SignupPage/>}/>
+      <Route path='/signup' element={<PublicRoute><SignupPage/></PublicRoute>}/>
+      <Route path='/login' element={<SignupPage/>}/>
       <Route path='/profile' element={<ProfilePage/>}/>
       <Route path='*' element={<HomePage/>} />
     </Routes>
