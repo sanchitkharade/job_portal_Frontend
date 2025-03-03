@@ -11,4 +11,4 @@ const navigateToLogin=(navigate:any)=>{
     removeUser();
     navigate('/login');
 }
-export { loginUser};
+export { loginUser,navigateToLogin};

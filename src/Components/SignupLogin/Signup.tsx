@@ -18,6 +18,9 @@ const Signup=()=>{
     const [formErrors,setFormErrors]=useState<{[key:string]:string}>(form);
     const navigate = useNavigate();
     const [loading,setLoading] = useState(false);
+    const handleRadioChange = (value: string) => {
+      setData({ ...data, accountType: value });
+  };
     const handleChange=(e:any)=>{
         let name=e.target.name, value=e.target.value;
         setData({...data,[name]:value})
@@ -89,7 +92,7 @@ const Signup=()=>{
       placeholder="Enter Confirm Password"/>
        <Radio.Group 
       value={data.accountType}
-      onChange={handleChange}
+      onChange={handleRadioChange}
       label="You are A ?"
       withAsterisk
     >
