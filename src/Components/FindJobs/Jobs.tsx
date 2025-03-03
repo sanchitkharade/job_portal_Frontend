@@ -53,8 +53,8 @@ const Jobs=()=>{
         setFilteredJobs(filtered);
     },[filter,jobList]);
     return <div className="p-5 pl-12">
-        <div className="flex justify-between">
-            <div className="text-2xl font-semibold">Rcommended Jobs</div>
+        <div className="flex flex-wrap justify-between">
+            <div className="text-2xl xs-mx:text-xl font-semibold">Rcommended Jobs</div>
             <Sort sort="job"/>
         </div>
         <div className="mt-10 flex flex-wrap gap-5">
