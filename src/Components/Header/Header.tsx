@@ -27,9 +27,9 @@ const Header = () => {
         const decoded=jwtDecode(localStorage.getItem("token")||"");
         dispatch(setUser({...decoded,email:decoded.sub}));
       }
-        getProfile(user?.profileId).then((data:any) =>{
+        getProfile(user?.profileId).then((data) =>{
             dispatch(setProfile(data));
-        }).catch((err:any) =>{
+        }).catch((err) =>{
                 console.log(err);
             });
     }, [token,navigate]);

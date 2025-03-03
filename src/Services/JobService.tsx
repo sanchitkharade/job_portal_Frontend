@@ -1,6 +1,5 @@
 import axiosInstance from "../Interceptor/AxiosInterceptor";
 
-
 const postJob = async (job: any) => {
   return axiosInstance
     .post(`/jobs/post`, job)

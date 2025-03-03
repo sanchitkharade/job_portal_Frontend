@@ -14,7 +14,7 @@ const JwtSlice = createSlice({
       state = '';
       return state;
     },
-  },
+  }, 
 });
 
 export const { setJwt, removeJwt } = JwtSlice.actions;
