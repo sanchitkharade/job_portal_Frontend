@@ -52,18 +52,19 @@ const ApplyJobForm = () => {
                         resume: isNotEmpty("Resume is Required")
                     }
                 })
-  return <div className="flex flex-col gap-5">
+  return <>
     <LoadingOverlay className="!fixed"
           visible={submit}
           zIndex={1000}
           overlayProps={{ radius: 'sm', blur: 2 }}
-          loaderProps={{ color: 'brightSun.4', type: 'bars' }}
-        />
-  <div className="flex gap-10 [&>*]:w-1/2">
+          loaderProps={{ color: 'brightSun.4', type: 'bars' }}/>
+        
+    <div className='flex flex-col gap-5'>
+  <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 sm-mx:[&>*]:!w-full sm-mx:flex-wrap">
   <TextInput {...form.getInputProps("name")} readOnly={Preview} variant={Preview?"unstyled":"default"} className={`${Preview?"text-mine-shaft-300 font-semibold":""}`} withAsterisk label="Full Name" placeholder="Enter Name"/>
   <TextInput {...form.getInputProps("email")} readOnly={Preview} variant={Preview?"unstyled":"default"} className={`${Preview?"text-mine-shaft-300 font-semibold":""}`} withAsterisk label="Email" placeholder="Enter Email"/>
   </div>
-  <div className="flex gap-10 [&>*]:w-1/2">
+  <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2">
   <NumberInput {...form.getInputProps("phone")} readOnly={Preview} variant={Preview?"unstyled":"default"} className={`${Preview?"text-mine-shaft-300 font-semibold":""}`} withAsterisk label="Phone Number" placeholder="Enter Phone Number" hideControls min={0} max={9999999999} clampBehavior="strict"/>
   <TextInput {...form.getInputProps("website")} readOnly={Preview} variant={Preview?"unstyled":"default"} className={`${Preview?"text-mine-shaft-300 font-semibold":""}`} withAsterisk label="Personal Website" placeholder="Enter URL"/>
   </div>
@@ -74,7 +75,8 @@ const ApplyJobForm = () => {
       <Button fullWidth onClick={handlePreview} color="brightSun.4" variant="outline">Edit</Button>
       <Button fullWidth onClick={handlesubmit} color="brightSun.4" variant="light">Submit</Button>
       </div>}
-</div>
+    </div>
+</>
 }
 
 export default ApplyJobForm

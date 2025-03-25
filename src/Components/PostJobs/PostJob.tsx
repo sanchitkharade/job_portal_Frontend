@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 
 const PostJob=(props:any)=>{
     const {id}=useParams();
+    // const matches = useMediaQuery('(min-width: 56.25em)');
     const [editorData,setEditorData]=useState(content);
     const user = useSelector((state:any)=>state.user);
     const navigate=useNavigate();
@@ -76,18 +77,18 @@ const PostJob=(props:any)=>{
             errorNotification("Error",err.response.data.errorMessage);
         });
     }
-    return <div className="w-3/4 mx-auto">
+    return <div className="px-16 bs-mx:px-10 md-mx:px-5 py-5">
         <div className="text-2xl font-semibold">Post a Job</div>
         <div className="flex flex-col gap-5">
-            <div className="flex gap-10 [&>*]:w-1/2">
+            <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 sm-mx:[&>*]:!w-full sm-mx:flex-wrap">
                 <SelectInput form={form} name="jobTitle" {...select[0]}/>
                 <SelectInput form={form} name="company" {...select[1]}/>
             </div>
-            <div className="flex gap-10 [&>*]:w-1/2">
+            <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2">
                 <SelectInput form={form} name="experience" {...select[2]}/>
                 <SelectInput form={form} name="jobType" {...select[3]}/>
             </div>
-            <div className="flex gap-10 [&>*]:w-1/2">
+            <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2">
                 <SelectInput form={form} name="location" {...select[4]}/>
                 <NumberInput {...form.getInputProps('packageOffered')} label="Salary" withAsterisk min={1} max={300} placeholder="Enter Salary in LPA" hideControls clampBehavior="strict"/>
             </div>
