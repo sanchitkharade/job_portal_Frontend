@@ -51,7 +51,7 @@ const Talents=()=>{
             <div className="text-2xl font-semibold">Talents</div>
             <Sort/>
         </div>
-        <div className="mt-10 flex flex-wrap gap-5 justify-between">
+        <div className="mt-10 flex flex-wrap gap-5 ">
             {
                 filteredTalents.length?filteredTalents.map((talent:any,index:any)=><TalentCard key={index} {...talent}/>): <div className="text-2xl font-semibold">No Talents Found</div>
             }
