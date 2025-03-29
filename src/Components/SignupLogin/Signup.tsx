@@ -73,7 +73,7 @@ const Signup=()=>{
     overlayProps={{ radius: 'sm', blur: 2 }}
     loaderProps={{ color: 'brightSun.4', type: 'bars' }}
   />
-    <div className="w-1/2 px-20 flex flex-col justify-center gap-3">
+    <div className="w-1/2 sm-mx:py-20 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col justify-center gap-3">
         <div className="text-2xl font-semibold">Create Account</div>
         <TextInput value={data.name} error={formErrors.name} name="name" onChange={handleChange} withAsterisk label="Full Name" placeholder="Your Name"/>
         <TextInput withAsterisk value={data.email} error={formErrors.email} onChange={handleChange} name="email"
@@ -96,14 +96,14 @@ const Signup=()=>{
       label="You are A ?"
       withAsterisk
     >
-        <Group mt="xs">
-      <Radio className="px-6 py-4 border hover:bg-mine-shaft-900 border-mine-shaft-800 has-[:checked]:bg-bright-sun-400/5 has-[:checked]:border-bright-sun-400 rounded-lg  " autoContrast value="APPLICANT" label="Applicant" />
-      <Radio className="px-6 py-4 border hover:bg-mine-shaft-900 border-mine-shaft-800 has-[:checked]:bg-bright-sun-400/5 has-[:checked]:border-bright-sun-400 rounded-lg  " autoContrast value="EMPLOYER" label="Employer" />
-      </Group>
+        <div className="flex gap-6 xs-mx:gap-3">
+      <Radio className="px-6 py-4 sm-mx:px-4 sm-mx:py-2 border hover:bg-mine-shaft-900 border-mine-shaft-800 has-[:checked]:bg-bright-sun-400/5 has-[:checked]:border-bright-sun-400 rounded-lg  " autoContrast value="APPLICANT" label="Applicant" />
+      <Radio className="px-6 py-4 sm-mx:px-4 sm-mx:py-2 border hover:bg-mine-shaft-900 border-mine-shaft-800 has-[:checked]:bg-bright-sun-400/5 has-[:checked]:border-bright-sun-400 rounded-lg  " autoContrast value="EMPLOYER" label="Employer" />
+      </div>
     </Radio.Group>
       <Checkbox autoContrast label={<>I accept {' '}<Anchor>terms & conditions</Anchor></>}/>
       <Button loading={loading} onClick={handleSubmit} autoContrast variant="filled">Sign up</Button>
-      <div className="mx-auto">Already have an Account? <span className="text-bright-sun-400 hover:underline cursor-pointer" onClick={()=>{navigate("/login");setFormErrors(form); setData(form)}}>Login</span> </div>
+      <div className="text-center sm-mx:text-sm xs-mx:text-xs">Already have an Account? <span className="text-center sm-mx:text-sm xs-mx:text-xs text-bright-sun-400 hover:underline cursor-pointer" onClick={()=>{navigate("/login");setFormErrors(form); setData(form)}}>Login</span> </div>
     </div>
     </>
 }

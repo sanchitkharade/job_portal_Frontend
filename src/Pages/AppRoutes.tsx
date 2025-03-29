@@ -26,19 +26,18 @@ const AppRoutes = () => {
     <Header/>
     <Divider size="xs" mx="md"/>
     <Routes>
+    <Route path='/' element={<HomePage/>} />
     <Route path='/find-jobs' element={<FindJobs/>}/>
       <Route path='/find-talent' element={<FindTalent/>}/>
       <Route path='/jobs/:id' element={<JobDescPage/>}/>
       <Route path='/apply-job/:id' element={<ApplyJobPage/>} />
-      <Route path='/post-jobs/:id' element=
-      {<ProtectedRoute allowedRoles={['EMPLOYER']}><PostJobs/></ProtectedRoute>}/>
+      <Route path='/post-jobs/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostJobs/></ProtectedRoute>}/>
       <Route path='/posted-jobs/:id' element={<ProtectedRoute allowedRoles={['EMPLOYER']}><PostedJobPage/></ProtectedRoute>}/>
-      <Route path='/job-history' element=
-      {<ProtectedRoute allowedRoles={['APPLICANT']}><JobHistoryPage/></ProtectedRoute>}/>
+      <Route path='/job-history' element={<ProtectedRoute allowedRoles={['APPLICANT']}><JobHistoryPage/></ProtectedRoute>}/>
       <Route path='/talent-profile/:id' element={<TalentProfile/>}/>
       <Route path='/company/:name' element={<CompanyPage/>}/>
       <Route path='/signup' element={<PublicRoute><SignupPage/></PublicRoute>}/>
-      <Route path='/login' element={<SignupPage/>}/>
+      <Route path='/login' element={<PublicRoute><SignupPage/></PublicRoute>}/>
       <Route path='/profile' element={<ProfilePage/>}/>
       <Route path='*' element={<HomePage/>} />
     </Routes>

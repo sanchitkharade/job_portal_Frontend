@@ -1,11 +1,8 @@
 import { Button, TextInput } from "@mantine/core";
 import SelectInput from "./SelectInput";
-
 import { MonthPickerInput } from "@mantine/dates";
-import { useState } from "react";
 import { fields } from "../../Data/PostJob";
 import { isNotEmpty, useForm } from "@mantine/form";
-import Certification from "./Certification";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { successNotification } from "../../Services/NotificationService";
@@ -14,6 +11,7 @@ const CertiInput =(props:any)=>{
     const dispatch=useDispatch();
     const profile = useSelector((state:any) => state.profile);
     const select=fields;
+
      const form=useForm({
             mode:'controlled',
             validateInputOnChange: true,
@@ -44,11 +42,11 @@ const CertiInput =(props:any)=>{
         }
     return <div className="flex flex-col gap-3">
         <div className="text-lg font-semibold">Add Certificate</div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 xs-mx:[&>*]:w-full xs-mx:flex-wrap">
         <TextInput {...form.getInputProps("name")} label="Title" withAsterisk placeholder="Input placeholder"/>
         <SelectInput form={form} name="issuer" {...select[1]}/>
         </div>
-        <div className="flex gap-10 [&>*]:w-1/2">
+        <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 xs-mx:[&>*]:w-full xs-mx:flex-wrap">
         <MonthPickerInput {...form.getInputProps("issueDate")} withAsterisk maxDate={new Date()} label="Issue Date" placeholder="Pick Date" />
         <TextInput {...form.getInputProps("certificateId")} label="Certificate ID" withAsterisk placeholder="Input ID"/>
         </div>

@@ -21,7 +21,6 @@ const TalentProfile = () => {
   },[])
   return (
     <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] p-4">
-      <Divider size="xs" mx="md"/>
       <Button
           leftSection={<IconArrowLeft size={20} />}
           color="brightSun.4"
@@ -30,7 +29,7 @@ const TalentProfile = () => {
         >
           Back
         </Button>
-      <div className="flex gap-5">
+      <div className="flex gap-5 lg-mx:flex-wrap mt-3">
         <Profile {...profile} />
         <Recomtalent talents={talents}/>
       </div>

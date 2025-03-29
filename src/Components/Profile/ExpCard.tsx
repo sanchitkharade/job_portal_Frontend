@@ -18,7 +18,7 @@ const ExpCard =(props:any)=>{
     successNotification("Success", "Profile updated Successfully ");
   }
     return !edit?<div className="flex flex-col gap-2">
-        <div className="flex  justify-between">
+        <div className="flex  justify-between flex-wrap gap-2">
         <div className="flex gap-2 items-center">
           <div className="p-2 bg-mine-shaft-800 rounded-md">
             <img
@@ -36,7 +36,7 @@ const ExpCard =(props:any)=>{
         </div>
         <div className="text-sm text-mine-shaft-300">{formatdate(props.startDate) } - {props.working?"Present":formatdate(props.endDate)}</div>
       </div>
-      <div className="text-sm text-mine-shaft-300 text-justify">{props.description}</div>
+      <div className="text-sm xs-mx:text-xs text-mine-shaft-300 text-justify">{props.description}</div>
       {props.edit && <div className="flex gap-5">
         <Button onClick={()=>setEdit(true)} color="brightSun.4" variant="outline">Edit</Button>
         <Button color="red.8" variant="light" onClick={handleDelete}>Delete</Button>

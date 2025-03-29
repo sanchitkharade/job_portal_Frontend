@@ -35,17 +35,19 @@ const Header = () => {
     },[navigate])
     useEffect(() => {
       if(token!=""){
+        if(localStorage.getItem("token")!=""){
         const decoded=jwtDecode(localStorage.getItem("token")||"");
         dispatch(setUser({...decoded,email:decoded.sub}));
+        }
       }
-        getProfile(user?.profileId).then((data) =>{
+        if(user?.profileId)getProfile(user?.profileId).then((data) =>{
             dispatch(setProfile(data));
         }).catch((err) =>{
                 console.log(err);
             });
     }, [token,navigate]);
   
-  return location.pathname!=="/signup" && location.pathname!=="/login" ? <div className="w-full px-6 bg-mine-shaft-950 text-white h-20 flex justify-between items-center font-['poppins']">
+  return (location.pathname!=="/signup" && location.pathname!=="/login") ? <div className="w-full px-6 bg-mine-shaft-950 text-white h-20 flex justify-between items-center font-['poppins']">
       <Link to="/" className="flex gap-1 items-center text-bright-sun-400">
         <IconBrandGravatar className="h-8 w-8" />
         <div className="xs-mx:hidden text-3xl font-semibold cursor-pointer" >JobAlchemy</div>

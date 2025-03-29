@@ -71,8 +71,8 @@ const Login=()=>{
     overlayProps={{ radius: 'sm', blur: 2 }}
     loaderProps={{ color: 'brightSun.4', type: 'bars' }}
   />
-    <div className="w-1/2 px-20 flex flex-col justify-center gap-3">
-    <div className="text-2xl font-semibold">Log in</div>
+    <div className="w-1/2 sm-mx:w-full px-20 bs-mx:px-10 md-mx:px-5 flex flex-col justify-center gap-3">
+    <div className="text-2xl font-semibold">Login</div>
     <TextInput withAsterisk value={data.email} error={formErrors.email} onChange={handleChange} name="email"
     leftSection={<IconAt style={{ width: rem(16), height: rem(16) }} />}
     label="Email"
@@ -84,9 +84,9 @@ const Login=()=>{
   placeholder="Enter Password"/>
     
 <Button loading={loading} onClick={handleSubmit} autoContrast variant="filled">Login</Button>
-<div className="mx-auto">Don't have an Account? <span className="text-bright-sun-400 hover:underline cursor-pointer" onClick={()=>{navigate("/signup");setFormErrors(form);setData(form)}}>Sign up</span> </div>
+<div className="text-center sm-mx:text-sm xs-mx:text-xs">Don't have an Account? <span className="text-bright-sun-400 hover:underline cursor-pointer" onClick={()=>{navigate("/signup");setFormErrors(form);setData(form)}}>Sign up</span> </div>
 
-<div onClick={open} className="text-bright-sun-400 hover:underline cursor-pointer text-center">Forget Password</div>
+<div onClick={open} className=" sm-mx:text-sm xs-mx:text-xs text-bright-sun-400 hover:underline cursor-pointer text-center">Forget Password</div>
 </div>
 <ResetPassword opened={opened} close={close}/>
 </>
