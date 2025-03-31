@@ -34,11 +34,13 @@ const Header = () => {
       setupResponseInterceptor(navigate);
     },[navigate])
     useEffect(() => {
-      if(token!=""){
-        if(localStorage.getItem("token")!=""){
-        const decoded=jwtDecode(localStorage.getItem("token")||"");
-        dispatch(setUser({...decoded,email:decoded.sub}));
-        }
+      const storedToken=localStorage.getItem("token");
+    
+      if (storedToken && storedToken !== "") {
+          const decoded = jwtDecode(storedToken);
+          if (decoded && decoded.sub) {
+            dispatch(setUser({ ...decoded, email: decoded.sub }));
+          }
       }
         if(user?.profileId)getProfile(user?.profileId).then((data) =>{
             dispatch(setProfile(data));
@@ -69,7 +71,7 @@ const Header = () => {
 
         {
           links.map((link, index) => <div className={` h-full flex items-center`} key={index}>
-          <Link className="hover:text-bright-sun-400 text-xl" key={index} to={link.url}>{link.name}</Link>
+          <Link className="hover:text-bright-sun-400 text-xl" key={index} to={link.url} onClick={close}>{link.name} </Link>
         </div>)
         }
         </div>

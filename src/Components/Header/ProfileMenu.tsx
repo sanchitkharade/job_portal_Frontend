@@ -22,6 +22,7 @@ const ProfileMenu=()=> {
   const handleLogout=()=>{
         dispatch(removeUser());
         navigate('/');
+        window.location.reload();
       }
       const profile=useSelector((state:any)=>state.profile);
   return (
