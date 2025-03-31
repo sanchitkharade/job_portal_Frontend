@@ -1,9 +1,11 @@
 
-import axiosInstance from "../Interceptor/AxiosInterceptor";
+import axios from "axios";
 import { removeUser } from "../Slices/UserSlice";
 
+const base_url = "http://localhost:8080/auth/";
+
 const loginUser=async(login:any)=>{
-    return axiosInstance.post(`/login`,login)
+    return axios.post(`${base_url}login`,login)
     .then(res=>res.data)
     .catch(err=>{throw err});
 }
