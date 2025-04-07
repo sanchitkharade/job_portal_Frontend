@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Combobox, InputBase, ScrollArea, useCombobox } from '@mantine/core';
+import {  useNavigate } from 'react-router-dom';
 
 
 
 const SelectInput=(props:any)=> {
+  const navigate = useNavigate();
     useEffect(()=>{
         setData(props.options);
         setSearch(props.form.getInputProps(props.name).value);
@@ -72,7 +74,10 @@ const SelectInput=(props:any)=> {
             <ScrollArea.Autosize mah={200} type='scroll'>
           {options}
           {!exactOptionMatch && search?.trim().length > 0 && (
-            <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
+            (props.name=="jobTitle" || props.name=="location") &&<Combobox.Option value="$create">+ Create {search}</Combobox.Option>
+          )}
+          {!exactOptionMatch && search?.trim().length > 0 && (
+            props.name==="company" &&<Combobox.Option value="$create" onClick={()=>navigate("/create-company")}>+ Create Company</Combobox.Option>
           )}
           </ScrollArea.Autosize>
         </Combobox.Options>

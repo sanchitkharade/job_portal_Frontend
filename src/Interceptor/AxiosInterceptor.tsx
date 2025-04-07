@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
     baseURL: 'https://job-portal-backend-2-pgt4.onrender.com/',
-    
+    // baseURL: 'http://localhost:8080/',
 })
 
 axiosInstance.interceptors.request.use(

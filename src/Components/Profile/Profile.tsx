@@ -10,6 +10,7 @@ import { useHover } from "@mantine/hooks";
 import { IconEdit } from "@tabler/icons-react";
 import { successNotification } from "../../Services/NotificationService";
 import { getBase64 } from "../../Services/Utilities";
+import Resume from "./Resume";
 
 
 const Profile = ()=>{
@@ -46,6 +47,8 @@ const Profile = ()=>{
             <Experience/>
             <Divider mx="xs" my="xl"/>
             <Certification/>
+            <Divider mx="xs" my="xl"/>
+            <Resume/>
     </div>
 }
 export default Profile; 

@@ -1,5 +1,4 @@
 import { Avatar } from "@mantine/core";
-import { work } from "../../Data/Data";
 
 
 const Workimg = () => {
@@ -20,17 +19,34 @@ const Workimg = () => {
             </div>
         </div>
         <div className="flex flex-col gap-10">
-            {
-                work.map((item,index)=><div key={index} className="flex items-center gap-4">
+            <div  className="flex items-center gap-4">
                 <div className="p-2.5 bg-bright-sun-300 rounded-full">
-                    <img className="h-12 w-12 md-mx:w-9 md-mx:h-9 sm-mx:w-7 sm-mx:h-7" src={`/Working/${item.name}.png`} alt={item.name} /> 
+                    <img className="h-12 w-12 md-mx:w-9 md-mx:h-9 sm-mx:w-7 sm-mx:h-7" src={`/Working/Build Your Resume.png`} alt={""} /> 
                 </div>
                 <div>
-                    <div className="text-mine-shaft-200 text-xl md-mx:text-lg sm-mx:text-base font-semibold">{item.name}</div>
-                    <div className="text-mine-shaft-300 md-mx:text-sm sm-mx:text-xs">{item.desc}</div>
+                    <div className="text-mine-shaft-200 text-xl md-mx:text-lg sm-mx:text-base font-semibold">Build Your Resume</div>
+                    <div className="text-mine-shaft-300 md-mx:text-sm sm-mx:text-xs">   Create a standout resume with your skills.
+                    </div>
                 </div>
-            </div>)
-            }
+            </div>
+            <div  className="flex items-center gap-4">
+                <div className="p-2.5 bg-bright-sun-300 rounded-full">
+                    <img className="h-12 w-12 md-mx:w-9 md-mx:h-9 sm-mx:w-7 sm-mx:h-7" src={`/Working/Apply for Job.png`} alt={""} /> 
+                </div>
+                <div>
+                    <div className="text-mine-shaft-200 text-xl md-mx:text-lg sm-mx:text-base font-semibold">Apply for Job</div>
+                    <div className="text-mine-shaft-300 md-mx:text-sm sm-mx:text-xs">Find and apply for jobs that match your skills</div>
+                </div>
+            </div>
+            <div  className="flex items-center gap-4">
+                <div className="p-2.5 bg-bright-sun-300 rounded-full">
+                    <img className="h-12 w-12 md-mx:w-9 md-mx:h-9 sm-mx:w-7 sm-mx:h-7" src={`/Working/Get Hired.png`} alt={""} /> 
+                </div>
+                <div>
+                    <div className="text-mine-shaft-200 text-xl md-mx:text-lg sm-mx:text-base font-semibold">Get Hired</div>
+                    <div className="text-mine-shaft-300 md-mx:text-sm sm-mx:text-xs">Connect with employers and start your new job.</div>
+                </div>
+            </div>
             
         </div>
       </div>

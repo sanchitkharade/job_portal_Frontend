@@ -9,10 +9,10 @@ import { errorNotification, successNotification } from "../../Services/Notificat
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { getAllCompany } from "../../Services/CompanyService";
 
-const PostJob=(props:any)=>{
+const PostJob=()=>{
     const {id}=useParams();
-    // const matches = useMediaQuery('(min-width: 56.25em)');
     const [editorData,setEditorData]=useState(content);
     const user = useSelector((state:any)=>state.user);
     const navigate=useNavigate();
@@ -77,12 +77,23 @@ const PostJob=(props:any)=>{
             errorNotification("Error",err.response.data.errorMessage);
         });
     }
+    const [companies, setCompanies] = useState<any>([]);
+    useEffect(() => {
+        getAllCompany()
+          .then((res) => {
+            const companyNames = res.map((company: any) => company.name)
+              setCompanies(companyNames);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []);
     return <div className="px-16 bs-mx:px-10 md-mx:px-5 py-5">
         <div className="text-2xl font-semibold">Post a Job</div>
         <div className="flex flex-col gap-5">
             <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2 sm-mx:[&>*]:!w-full sm-mx:flex-wrap">
                 <SelectInput form={form} name="jobTitle" {...select[0]}/>
-                <SelectInput form={form} name="company" {...select[1]}/>
+                <SelectInput form={form} name="company" {...{label:"Company",placeholder:"Enter Company Name", options:companies}}/>
             </div>
             <div className="flex gap-10 md-mx:gap-5 [&>*]:w-1/2">
                 <SelectInput form={form} name="experience" {...select[2]}/>

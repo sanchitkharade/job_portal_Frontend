@@ -40,11 +40,20 @@ const getBase64=(file:any) =>{
         reader.onerror = (error) => reject(error);
     });
 }
-const formatInterviewTime=(dateStr:any)=>{
-    const date=new Date(dateStr);
-    return `${date.toLocaleTimeString('en-US', {
-       year:'numeric',month:'long',day:'numeric', hour: 'numeric', minute: 'numeric'})}`;
-}
+const formatInterviewTime = (dateStr: any) => {
+    const date = new Date(dateStr);
+  
+    const year = date.getUTCFullYear();
+    const month = date.toLocaleString('en-US', { month: 'long', timeZone: 'UTC' });
+    const day = date.getUTCDate();
+  
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+  
+    return `${month} ${day}, ${year} at ${hours}:${minutes}`;
+  };
+  
+  
 const openBase64pdf=(base64String:string)=>{
     const byteCharacters=atob(base64String);
     const byteNumbers=new Array(byteCharacters.length);
@@ -56,4 +65,8 @@ const openBase64pdf=(base64String:string)=>{
     const url=URL.createObjectURL(blob);
     window.open(url, '_blank');
 }
+
+
 export {formatdate, timeago,getBase64, formatInterviewTime,openBase64pdf};
+
+

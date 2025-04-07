@@ -1,14 +1,13 @@
 import { Avatar, Button, Divider, Modal, Text } from "@mantine/core";
 import { DateInput, TimeInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
-import { IconCalendarMonth, IconHeart, IconMapPin } from "@tabler/icons-react";
+import { IconCalendarMonth, IconMapPin } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProfile } from "../../Services/ProfileService";
 import { changeAppStatus } from "../../Services/JobService";
 import { errorNotification, successNotification } from "../../Services/NotificationService";
 import { formatInterviewTime, openBase64pdf } from "../../Services/Utilities";
-
 
 const TalentCard = (props: any) => {
   const {id} = useParams();
@@ -26,23 +25,56 @@ const TalentCard = (props: any) => {
     });
     else setProfile(props);
   },[props])
-  const handleOffer=(status:string)=>{
-    let interview:any={id,applicantId:profile?.id,applicationStatus:status};
-    if(status=="INTERVIEWING"){
-    const [hours,minutes]=time.split(":").map(Number);
-    date?.setHours(hours,minutes);
-    interview={...interview,interviewTime:date};
-    }
+  
 
-    changeAppStatus(interview).then((res) =>{
-    if(status=="INTERVIEWING")successNotification("Interview Scheduled","Interview Scheduled successfully");
-    else if (status=="OFFERED")successNotification("Offered","Offere has been sent successfully");
-    else successNotification("Rejected","Applicant has been Rejected");
-      window.location.reload();
-    }).catch((err) =>{
-      errorNotification("Error", err.respons?.data?.errorMessage);
-    });
+  const handleOffer = (status: string) => {
+    let interview: any = {
+      id,
+      applicantId: profile?.id,
+      applicationStatus: status,
+    };
+  
+    if (status === "INTERVIEWING" && date && time) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+    
+      // Split and convert to numbers
+      let [hours, minutes] = time.split(":").map(Number);
+    
+      // Add 5 hours and 30 minutes
+      minutes += 30;
+      hours += 5 + Math.floor(minutes / 60);
+      minutes = minutes % 60;
+    
+      // Wrap around hours if it goes above 24
+      hours = hours % 24;
+    
+      const adjustedHours = String(hours).padStart(2, '0');
+      const adjustedMinutes = String(minutes).padStart(2, '0');
+    
+      const interviewTime = `${year}-${month}-${day}T${adjustedHours}:${adjustedMinutes}`;
+    
+      interview = { ...interview, interviewTime };
+    }
+    
+  
+    changeAppStatus(interview)
+      .then((res) => {
+        if (status === "INTERVIEWING")
+          successNotification("Interview Scheduled", "Interview Scheduled successfully");
+        else if (status === "OFFERED")
+          successNotification("Offered", "Offer has been sent successfully");
+        else successNotification("Rejected", "Applicant has been Rejected");
+  
+        window.location.reload();
+      })
+      .catch((err) => {
+        errorNotification("Error", err.response?.data?.errorMessage);
+      });
   };
+  
+  
   return (
     <div className="bg-mine-shaft-900 p-4 w-96 bs-mx:w-[48%] md-mx:w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400 mb-5 mr-12">
       <div className="flex  justify-between">
@@ -57,7 +89,7 @@ const TalentCard = (props: any) => {
             </div>
           </div>
         </div>
-        <IconHeart className="text-mine-shaft-300 cursor-pointer" />
+        
       </div>
       <div className="flex gap-2 flex-wrap">
         {
@@ -72,7 +104,7 @@ const TalentCard = (props: any) => {
       <Divider size="xs" color="mineShaft.7" />
       {
         props.invited?<div className="flex gap-1 text-mine-shaft-200 text-sm items-center">
-          <IconCalendarMonth className="w-5 h-5"/>Interview: {formatInterviewTime(props.interviewTime)}
+          <IconCalendarMonth className="w-5 h-5"/>Interview : {formatInterviewTime(props.interviewTime)}
         </div>:<div className="flex justify-between">
         <div className=" text-mine-shaft-300">
           {props.totalExp?`Experience : ${props.totalExp} Years`:"Fresher"}
@@ -111,7 +143,19 @@ const TalentCard = (props: any) => {
       label="Date"
       placeholder=" Enter Date"
     />
-    <TimeInput label="Time" value={time} onChange={(e)=>setTime(e.currentTarget.value)} ref={ref} onClick={()=>ref.current?.showPicker()} />
+    <TimeInput
+  label="Time"
+  value={time}
+  onChange={(e) => {
+    const value = e.currentTarget.value;
+    setTime(value); // like "13:48"
+  }}
+  
+  ref={ref}
+  onClick={() => ref.current?.showPicker()}
+/>
+
+
     <Button onClick={()=>handleOffer("INTERVIEWING")} className="!bg-bright-sun-400 !text-mine-shaft-950" variant="unstyled" fullWidth>Schedule</Button>
         </div>
       </Modal>

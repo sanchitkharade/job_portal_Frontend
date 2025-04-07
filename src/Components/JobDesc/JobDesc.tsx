@@ -11,12 +11,23 @@ import { changeProfile } from "../../Slices/ProfileSlice";
 import { useEffect, useState } from "react";
 import { postJob } from "../../Services/JobService";
 import { errorNotification, successNotification } from "../../Services/NotificationService";
+import { getCompany } from "../../Services/CompanyService";
 
 const JobDesc = (props:any) => {
   const profile=useSelector((state:any) => state.profile);
+  const [company, setCompany] = useState<{ [key: string]: any } | null>(null);
   const user = useSelector((state:any)=>state.user);
   const [applied,setApplied]=useState(false);
   const dispatch=useDispatch();
+  useEffect(() => {
+    getCompany(props.company)
+      .then((res) => {
+        setCompany(res);
+      })
+      .catch((err) => {
+        console.error("Error fetching company:", err);
+      })
+  }, [props]);
   const handleSaveJob=()=>{
       let savedJobs: any = Array.isArray(profile.savedJobs) ? [...profile.savedJobs] : [];
   
@@ -119,11 +130,11 @@ const JobDesc = (props:any) => {
       <div className="flex  justify-between mb-3 xs-mx:flex-wrap xs-mx:gap-2">
         <div className="flex gap-2 items-center">
           <div className="p-3 bg-mine-shaft-800 rounded-lg">
-            <img className="h-8" src={`/Icons/${props.company}.png`} alt="" />
+            <img className="h-8" src={company?.picture?`data:image/jpeg;base64,${company?.picture}`:"/avatar.png"} alt="" />
           </div>
           <div>
             <div className="font-medium text-lg">{props.company}</div>
-            <div className=" text-mine-shaft-300">10K+ Employees</div>
+            <div className=" text-mine-shaft-300">{company?.size} Employees</div>
           </div>
         </div>
           <Link to={`/company/${props.company}`}>
@@ -132,7 +143,7 @@ const JobDesc = (props:any) => {
             </Button>
           </Link>
       </div>
-      <div className="text-mine-shaft-300 text-justify xs-mx:text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi explicabo enim dolorem aperiam quo voluptate dicta natus similique voluptatem ducimus totam sed dolores provident animi esse, suscipit unde accusamus in facere impedit ea architecto adipisci! Tempora autem eos quod iure!</div>
+      <div className="text-mine-shaft-300 text-justify xs-mx:text-sm">{company?.overview}</div>
       </div>
     </div>
   );

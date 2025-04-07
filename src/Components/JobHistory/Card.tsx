@@ -1,13 +1,28 @@
 import { Button, Divider, Text } from "@mantine/core";
 import { IconBookmark, IconBookmarkFilled, IconCalendarMonth, IconClockHour3 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import { timeago } from "../../Services/Utilities";
+import { formatInterviewTime, timeago } from "../../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
+import { useEffect, useState } from "react";
 
 const Card = (props: any) => {
   const dispatch=useDispatch();
+  
   const profile=useSelector((state:any)=>state.profile);
+  const [interviewTime, setInterviewTime] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (props?.applicants && profile?.id) {
+      const matchedApplicant = props.applicants.find(
+        (applicant: any) => applicant.applicantId === profile.id
+      );
+       setInterviewTime(matchedApplicant.interviewTime);
+    }
+  }, [props?.applicants, profile?.id]);
+  
+  
+
   const handleSaveJob=()=>{
       let savedJobs: any = Array.isArray(profile.savedJobs) ? [...profile.savedJobs] : [];
   
@@ -20,6 +35,7 @@ const Card = (props: any) => {
       let updatedProfile={...profile,savedJobs:savedJobs};
       dispatch(changeProfile(updatedProfile));
     }
+    
   return <div className="bg-mine-shaft-900 p-4 w-72 flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400 mb-5 mr-12">
       <div className="flex  justify-between">
         <div className="flex gap-2 items-center">
@@ -53,8 +69,7 @@ const Card = (props: any) => {
           &#8377;{props.packageOffered} LPA
         </div>
         <div className="flex gap-1 text-xs text-mine-shaft-400 items-center">
-          <IconClockHour3 className="h-5 w-5" stroke={1.5} />{props.applied||props.interviewing?"Applied ":props.offered?"Interviewed ":"Posted "}
-          {timeago(props.posttime)}
+          <IconClockHour3 className="h-5 w-5" stroke={1.5} />{props.applied||props.interviewing?"Applied ":props.offered?"Interviewed ":"Posted " + timeago(props.posttime)}
         </div>
       </div>
       {
@@ -65,7 +80,7 @@ const Card = (props: any) => {
       }
       {
         props.interviewing && <div className="flex gap-1 text-sm text-center">
-            <IconCalendarMonth className="text-bright-sun-400 w-5 h-5" stroke={1.5}/>Sun, August 27 &bull; <span className="text-mine-shaft-400">10:00 AM</span>
+            <IconCalendarMonth className="text-bright-sun-400 w-5 h-5" stroke={1.5}/>Interview : {formatInterviewTime(interviewTime)}
             </div>}
             <Link to={`/jobs/${props.id}`}>
             <Button fullWidth color="brightSun.4" variant="outline">View Job</Button>

@@ -14,15 +14,6 @@ import { setupResponseInterceptor } from "../../Interceptor/AxiosInterceptor";
 import { useDisclosure } from "@mantine/hooks";
 
 const Header = () => {
-  const links = [
-    {name: "Find Jobs",url:"find-jobs"},
-    {name: "Find Talent",url:"find-talent"},
-    {name: "Post Jobs",url:"post-jobs/0"},
-    {name: "Posted Job",url:"posted-jobs/0"},
-    {name: "Job History",url:"job-history"},
-    
-   ] 
-
   const dispatch=useDispatch();
   const [opened, { open, close }] = useDisclosure(false);
   const navigate=useNavigate();
@@ -54,7 +45,7 @@ const Header = () => {
         <IconBrandGravatar className="h-8 w-8" />
         <div className="xs-mx:hidden text-3xl font-semibold cursor-pointer" >JobAlchemy</div>
       </Link>
-      {NavLinks()}
+      <NavLinks/>
       <div className="flex gap-3 items-center">
         
         {user?<ProfileMenu/>:<Link to={"/login"}>
@@ -69,11 +60,24 @@ const Header = () => {
         <Drawer size="xs" overlayProps={{backgroundOpacity:0.5,blur:4}} position="right" opened={opened} onClose={close} closeButtonProps={{icon:<IconX size={30}/>}}>
         <div className="flex flex-col gap-5 items-center">
 
-        {
-          links.map((link, index) => <div className={` h-full flex items-center`} key={index}>
-          <Link className="hover:text-bright-sun-400 text-xl" key={index} to={link.url} onClick={close}>{link.name} </Link>
-        </div>)
-        }
+        <div className={` h-full flex items-center`}>
+          <Link className="hover:text-bright-sun-400 text-xl"  to={"find-jobs"} onClick={close}>Find Jobs </Link>
+        </div>
+        <div className={` h-full flex items-center`}>
+          <Link className="hover:text-bright-sun-400 text-xl"  to={"find-talent"} onClick={close}>Find Talent </Link>
+        </div>
+        <div className={` h-full flex items-center`}>
+          <Link className="hover:text-bright-sun-400 text-xl"  to={"find-company"} onClick={close}>Find Company </Link>
+        </div>
+        {user?.accountType == "EMPLOYER" &&<div className={` h-full flex items-center`}>
+          <Link className="hover:text-bright-sun-400 text-xl"  to={"post-jobs/0"} onClick={close}>Post Jobs </Link>
+        </div>}
+        {user?.accountType == "EMPLOYER" &&<div className={` h-full flex items-center`}>
+          <Link className="hover:text-bright-sun-400 text-xl"  to={"posted-jobs/0"} onClick={close}>Posted Job </Link>
+        </div>}
+        {user?.accountType == "APPLICANT" &&<div className={` h-full flex items-center`}>
+          <Link className="hover:text-bright-sun-400 text-xl"  to={"job-history"} onClick={close}>Job History </Link>
+        </div>}
         </div>
       </Drawer>
       </div>

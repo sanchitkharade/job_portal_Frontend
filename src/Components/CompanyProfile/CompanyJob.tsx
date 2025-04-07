@@ -1,11 +1,13 @@
-import { jobList } from "../../Data/JobsData";
+
 import JobCard from "../FindJobs/JobCard";
 
 
-const CompanyJob=()=>{
+
+const CompanyJob=(props:any)=>{
+
     return <div className="flex mt-10 flex-wrap gap-3">
         {
-            jobList.map((job,index)=><JobCard key={index}{...job}/>)
+            props.jobList.map((job:any,index:any)=><JobCard key={index}{...job}/>)
         }
     </div>
 }

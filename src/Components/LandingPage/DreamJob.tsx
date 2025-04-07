@@ -1,7 +1,9 @@
 import { Avatar, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 const DreamJob = () =>{
+    const navigate=useNavigate();
     return (
         <div className="flex sm-mx:flex-col-reverse items-center px-16 bs-mx:px-10 md-mx:px-5">
             <div className="flex flex-col w-[45%] gap-3 sm-mx:w-full">
@@ -10,7 +12,7 @@ const DreamJob = () =>{
                 <div className="flex gap-3 mt-5 items-center">
                     <TextInput className="bg-mine-shaft-900 text-mine-shaft-100 [&_input]:text-mine-shaft-100 rounded-lg p-1 px-2  " variant="unstyled"  label="Job Title" placeholder="Software Engineer" />
                     <TextInput className="bg-mine-shaft-900 text-mine-shaft-100 rounded-lg p-1 px-2  [&_input]:text-mine-shaft-100" variant="unstyled"  label="Job Type" placeholder="Full Time" />
-                    <div className="flex items-center justify-center h-full w-20 bg-bright-sun-400 text-mine-shaft-100 rounded-lg p-2 hover:bg-bright-sun-500 cursor-pointer">
+                    <div className="flex items-center justify-center h-full w-20 bg-bright-sun-400 text-mine-shaft-100 rounded-lg p-2 hover:bg-bright-sun-500 cursor-pointer" onClick={()=>navigate("/find-jobs")}>
                         <IconSearch className="h-[85%] w-[85%]" />
                     </div>
                 </div>

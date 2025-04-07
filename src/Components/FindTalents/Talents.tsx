@@ -10,12 +10,13 @@ const Talents=()=>{
     const[talents,setTalents]=useState<any>([]);
     const filter = useSelector((state:any)=>state.filter);
     const sort = useSelector((state:any)=>state.sort);
+    const user = useSelector((state:any)=>state.user);
 
     const [filteredTalents,setFilteredTalents]=useState<any>([]);
     useEffect(()=>{
         dispatch(resetFilter()) ;
         getAllProfile().then((res)=>{
-            setTalents(res);
+            setTalents(res.filter((prof:any)=>prof.name!==user.name));
         }).catch((err)=>{
             console.log(err);
         })
@@ -31,12 +32,26 @@ const Talents=()=>{
     },[sort]);
     useEffect(()=>{
         let filterTalent = talents;
-        if(filter.name)filterTalent=filterTalent.filter((talent:any)=>talent.name.toLowerCase().includes(filter.name.toLowerCase()));
-        if(filter["Job Title"] && filter["Job Title"].length>0){
-            filterTalent=filterTalent.filter((talent:any)=>filter["Job Title"]?.some((title:any)=>talent.jobTitle.toLowerCase().includes(title.toLowerCase())));
+        if(filter.name) {
+            filterTalent = filterTalent.filter((talent: any) => 
+                talent.name?.toLowerCase().includes(filter.name.toLowerCase())
+            );
         }
-        if(filter.Location && filter.Location.length>0){
-            filterTalent=filterTalent.filter((talent:any)=>filter.Location?.some((location:any)=>talent.location.toLowerCase().includes(location.toLowerCase())));
+        
+        if(filter["Job Title"] && filter["Job Title"].length > 0) {
+            filterTalent = filterTalent.filter((talent: any) => 
+                talent.jobTitle && filter["Job Title"].some((title: any) => 
+                    talent.jobTitle.toLowerCase().includes(title?.toLowerCase())
+                )
+            );
+        }
+        
+        if(filter.Location && filter.Location.length > 0) {
+            filterTalent = filterTalent.filter((talent: any) => 
+                talent.location && filter.Location.some((location: any) => 
+                    talent.location.toLowerCase().includes(location?.toLowerCase())
+                )
+            );
         }
         if(filter.Skills && filter.Skills.length>0){
             filterTalent=filterTalent.filter((talent:any)=>filter.Skills?.some((skill:any)=>talent.skills?.some((talentSkill:any)=>talentSkill.toLowerCase().includes(skill.toLowerCase()))));

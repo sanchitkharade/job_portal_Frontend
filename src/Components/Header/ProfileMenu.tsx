@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { removeUser } from '../../Slices/UserSlice';
+import { openBase64pdf } from '../../Services/Utilities';
 
 const ProfileMenu=()=> {
   const dispatch=useDispatch();
@@ -44,7 +45,7 @@ const ProfileMenu=()=> {
         <Menu.Item leftSection={<IconMessageCircle style={{ width: rem(14), height: rem(14) }} />}>
           Messages
         </Menu.Item>
-        <Menu.Item leftSection={<IconFileText style={{ width: rem(14), height: rem(14) }} />}>
+        <Menu.Item leftSection={<IconFileText style={{ width: rem(14), height: rem(14) }} />} onClick={()=>openBase64pdf(profile.resume)}>
           Resume
         </Menu.Item>
         <Menu.Item
